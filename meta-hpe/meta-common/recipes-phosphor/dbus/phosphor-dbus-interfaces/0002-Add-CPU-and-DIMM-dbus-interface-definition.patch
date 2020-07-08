@@ -1,0 +1,45 @@
+From 7a27fbc1418d1b8ed035fd018a7b2e960e37b4be Mon Sep 17 00:00:00 2001
+From: Louis Hsu <kai-hsiang.hsu@hpe.com>
+Date: Fri, 7 Feb 2020 15:40:29 +0800
+Subject: [PATCH] Add CPU and DIMM dbus interface definition
+
+---
+ xyz/openbmc_project/Inventory/Item/Cpu.interface.yaml  | 10 +++++++++-
+ xyz/openbmc_project/Inventory/Item/Dimm.interface.yaml |  9 ++++++++-
+ 2 files changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/xyz/openbmc_project/Inventory/Item/Cpu.interface.yaml b/xyz/openbmc_project/Inventory/Item/Cpu.interface.yaml
+index ab29cf3..9b1d588 100644
+--- a/xyz/openbmc_project/Inventory/Item/Cpu.interface.yaml
++++ b/xyz/openbmc_project/Inventory/Item/Cpu.interface.yaml
+@@ -1,2 +1,11 @@
+ description: >
+     Implement to provide CPU attributes.
++properties:
++    - name: Present
++      type: boolean
++      description: >
++          CPU present status
++    - name: Functional
++      type: boolean
++      description: >
++          CPU functional status
+diff --git a/xyz/openbmc_project/Inventory/Item/Dimm.interface.yaml b/xyz/openbmc_project/Inventory/Item/Dimm.interface.yaml
+index e08b690..05f8ced 100644
+--- a/xyz/openbmc_project/Inventory/Item/Dimm.interface.yaml
++++ b/xyz/openbmc_project/Inventory/Item/Dimm.interface.yaml
+@@ -164,6 +164,14 @@
+     - name: MemoryMedia
+       type: array[string]
+       description: Media of this memory.
++    - name: Present
++      type: boolean
++      description: >
++          DIMM present status
++    - name: Functional
++      type: boolean
++      description: >
++          DIMM functional status
+
+ enumerations:
+     - name: Ecc

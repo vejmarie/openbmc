@@ -1,0 +1,23 @@
+From 1ed50c749e27b14ae465f1e25531d3cfeefc2654 Mon Sep 17 00:00:00 2001
+From: John Chung <john.chung@hpe.com>
+Date: Sat, 25 May 2019 00:13:41 +0800
+Subject: [PATCH] Support GXP image
+
+---
+ images.hpp | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/images.hpp b/images.hpp
+index 97b8f7f..d969cbb 100644
+--- a/images.hpp
++++ b/images.hpp
+@@ -11,8 +11,7 @@ namespace image
+ {
+ 
+ // BMC flash image file name list.
+-const std::vector<std::string> bmcImages = {"image-kernel", "image-rofs",
+-                                            "image-rwfs", "image-u-boot"};
++const std::vector<std::string> bmcImages = {"image-kernel", "image-rofs", "image-rwfs", "image-u-boot", "image-section"};
+ 
+ } // namespace image
+ } // namespace software

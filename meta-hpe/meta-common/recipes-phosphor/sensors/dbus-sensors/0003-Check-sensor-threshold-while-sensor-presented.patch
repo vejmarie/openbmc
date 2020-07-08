@@ -1,0 +1,23 @@
+From 45238932fb37fdce1490f86aaac98f382be5d6f9 Mon Sep 17 00:00:00 2001
+From: John Chung <john.chung@hpe.com>
+Date: Wed, 12 Feb 2020 20:41:12 +0800
+Subject: [PATCH] Check sensor threshold while sensor presented
+
+---
+ src/IpmbSensor.cpp | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/src/IpmbSensor.cpp b/src/IpmbSensor.cpp
+index 328991c..8bafbf9 100755
+--- a/src/IpmbSensor.cpp
++++ b/src/IpmbSensor.cpp
+@@ -309,6 +309,9 @@ void IpmbSensor::checkThresholds(void)
+     {
+         return;
+     }
++    else if (this->value <= 0) {
++        return;
++    }
+     thresholds::checkThresholds(this);
+ }
+ 

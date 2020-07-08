@@ -1,0 +1,87 @@
+From 2ffe4f410170345a68a5d5f959cfede0e20dbd84 Mon Sep 17 00:00:00 2001
+From: Gilbert Chen <gilbert.chen@hpe.com>
+Date: Wed, 1 Apr 2020 22:40:14 +0800
+Subject: [PATCH] add obmc-flash-bios script
+
+---
+ Makefile.am                   |  3 ++-
+ obmc-flash-bios               | 35 +++++++++++++++++++++++++++++++++++
+ obmc-flash-host-bios@.service |  3 ++-
+ 3 files changed, 39 insertions(+), 2 deletions(-)
+ create mode 100644 obmc-flash-bios
+
+diff --git a/Makefile.am b/Makefile.am
+index 293867e..90ee579 100755
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -19,7 +19,8 @@ bin_PROGRAMS = \
+ 	phosphor-image-updater
+ 
+ dist_bin_SCRIPTS = \
+-	obmc-flash-bmc
++	obmc-flash-bmc \
++	obmc-flash-bios
+ 
+ phosphor_version_software_manager_SOURCES = \
+ 	image_manager_main.cpp \
+diff --git a/obmc-flash-bios b/obmc-flash-bios
+new file mode 100644
+index 0000000..3292657
+--- /dev/null
++++ b/obmc-flash-bios
+@@ -0,0 +1,43 @@
++#!/bin/bash
++set -eo pipefail
++
++# Get the mtd device number (mtdX)
++findmtd() {
++  m="$(grep -xl "$1" /sys/class/mtd/*/name)"
++  m="${m%/name}"
++  m="${m##*/}"
++  echo "${m}"
++}
++
++mtd_write() {
++  flashmtd="$(findmtd "${reqmtd}")"
++  img="/tmp/images/${version}/${imgfile}"
++  flashcp -v ${img} /dev/${flashmtd}
++}
++
++case "$1" in
++  srom)
++    reqmtd="host-prime"
++    imgfile="$2"
++    version="$3"
++    mtd_write
++    reqmtd="host-second"
++    imgfile="$2"
++    version="$3"
++    mtd_write
++    ;;
++  vrom)
++    reqmtd="vrom-prime"
++    imgfile="$2"
++    version="$3"
++    mtd_write
++    reqmtd="vrom-second"
++    imgfile="$2"
++    version="$3"
++    mtd_write
++    ;;
++  *)
++    echo "Invalid argument"
++    exit 1
++    ;;
++esac
+diff --git a/obmc-flash-host-bios@.service b/obmc-flash-host-bios@.service
+index da8e4db..a59680c 100644
+--- a/obmc-flash-host-bios@.service
++++ b/obmc-flash-host-bios@.service
+@@ -4,4 +4,5 @@ Description=Flash Host Bios image %I to Host
+ [Service]
+ Type=oneshot
+ RemainAfterExit=no
+-ExecStart=flashcp -v /tmp/images/%I/ImageHost.pnor /dev/mtd7
++ExecStart=obmc-flash-bios srom ImageHost.pnor %i
++ExecStart=obmc-flash-bios vrom ImageHost.pnor %i
+\ No newline at end of file

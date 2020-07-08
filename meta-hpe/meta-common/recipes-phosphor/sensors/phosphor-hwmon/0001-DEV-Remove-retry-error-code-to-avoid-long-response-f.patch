@@ -1,0 +1,56 @@
+From a310ee955f4e222825aa572c58576998658777ed Mon Sep 17 00:00:00 2001
+From: John Chung <john.chung@hpe.com>
+Date: Thu, 22 Aug 2019 04:39:50 +0800
+Subject: [PATCH] DEV: Remove retry error code to avoid long response for ipmi
+ sensor list
+
+---
+ hwmonio.cpp  | 8 ++++----
+ mainloop.cpp | 6 ++++++
+ 2 files changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/hwmonio.cpp b/hwmonio.cpp
+index 82d1a9d..27bd006 100644
+--- a/hwmonio.cpp
++++ b/hwmonio.cpp
+@@ -64,19 +64,19 @@ static constexpr auto retryableErrors = {
+      * Retry on bus or device errors or timeouts in case
+      * they are transient.
+      */
+-    EIO,
+-    ETIMEDOUT,
++    //EIO,
++    //ETIMEDOUT,
+ 
+     /*
+      * Retry CRC errors.
+      */
+-    EBADMSG,
++    //EBADMSG,
+ 
+     /*
+      * Some hwmon drivers do this when they aren't ready
+      * instead of blocking.  Retry.
+      */
+-    EAGAIN,
++    //EAGAIN,
+     /*
+      * We'll see this when for example i2c devices are
+      * unplugged but the driver is still bound.  Retry
+diff --git a/mainloop.cpp b/mainloop.cpp
+index 6304061..48b7a72 100644
+--- a/mainloop.cpp
++++ b/mainloop.cpp
+@@ -426,6 +426,12 @@ void MainLoop::read()
+                 // and set the functional property accordingly
+                 if (!statusIface->functional((fault == 0) ? true : false))
+                 {
++                    // Display error return code
++                    if (fault == 1) { // sensor fault, then display 0
++                        updateSensorInterfaces(obj, 0);
++                    } else { 
++                        updateSensorInterfaces(obj, fault);
++                    }
+                     continue;
+                 }
+             }
