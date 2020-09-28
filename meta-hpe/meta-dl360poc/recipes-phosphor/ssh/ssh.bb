@@ -6,7 +6,7 @@ LICENSE = "MIT"
 
 #Note: The keys populated here are just as an example,
 
-SRC_URI = "file://id_rsa \
+SRC_URI = "file://id_rsa.pub
           "
 S = "${WORKDIR}"
 
