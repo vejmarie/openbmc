@@ -1,4 +1,4 @@
-DESCRIPTION = "Add ssh public key to the root accounts"
+DESCRIPTION = "Add ssh public key to the root account"
 
 PR = "r0"
 
@@ -17,6 +17,7 @@ do_install() {
         install -m 0755 ${S}/id_rsa.pub ${D}/home/${USER}/.ssh/authorized_keys
 }
 
-PACKAGES += "${PN}-server"
+PACKAGES += "${PN}-sshpubkey"
+FILES_${PN}-sshpubkey += "/home/${USER}/.ssh/authorized_keys"
 
-FILES_${PN}-server += "/home/${USER}/.ssh/authorized_keys"
+BBCLASSEXTEND += "nativesdk"
