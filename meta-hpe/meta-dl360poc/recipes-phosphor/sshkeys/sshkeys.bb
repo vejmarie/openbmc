@@ -7,7 +7,9 @@ LIC_FILES_CHKSUM = "file://${HPEBASE}/COPYING.apache-2.0;md5=34400b68072d710fecd
 
 PROVIDES += "virtual/ssh-config"
 
-inherit native
+# inherit native
+inherit bin_package
+
 #Note: The keys populated here are just as an example,
 
 SRC_URI = "file://id_rsa.pub \
@@ -19,6 +21,5 @@ USER="root"
 do_install() {
         install -d ${D}/home/${USER}/.ssh/
         install -m 0755 ${S}/id_rsa.pub ${D}/home/${USER}/.ssh/authorized_keys
-        echo 'SSH SETUP' > ${D}/home/${USER}/ssh
 }
 
