@@ -24,7 +24,7 @@
 
 inherit core-image
 inherit obmc-phosphor-utils
-inherit deploysshkeys
+inherit phosphor-deploy-ssh-keys
 
 LICENSE = "Apache-2.0"
 
