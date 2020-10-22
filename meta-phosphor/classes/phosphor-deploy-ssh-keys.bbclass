@@ -17,6 +17,6 @@ deploy_local_user () {
 	chmod 700 ${IMAGE_ROOTFS}/home/${username}/.ssh
 	priv=`cat ${IMAGE_ROOTFS}/etc/group | grep "priv-admin"`
 	newpriv=`echo "${priv},${username}`
-	( grep -v "priv-admin" ${IMAGE_ROOTFS}/etc/group ; echo $newpriv ) >& ${IMAGE_ROOTFS}/etc/group
+	( grep -v "priv-admin" ${IMAGE_ROOTFS}/etc/group ; echo ${newpriv} ) >& ${IMAGE_ROOTFS}/etc/group
         fi
 }
