@@ -16,7 +16,7 @@ deploy_local_user () {
 	chmod 600  ${IMAGE_ROOTFS}/home/${username}/.ssh/authorized_keys
 	chmod 700 ${IMAGE_ROOTFS}/home/${username}/.ssh
 	priv=`cat ${IMAGE_ROOTFS}/etc/group | grep "priv-admin"`
-	grep -v "priv-admin" ${IMAGE_ROOTFS}/etc/group > ${IMAGE_ROOTFS}/etc/group.new
+	( grep -v "priv-admin" ${IMAGE_ROOTFS}/etc/group ) &> ${IMAGE_ROOTFS}/etc/group.new
 	cp ${IMAGE_ROOTFS}/etc/group.new ${IMAGE_ROOTFS}/etc/group
 	rm ${IMAGE_ROOTFS}/etc/group.new
 	echo ${priv},${username} >> ${IMAGE_ROOTFS}/etc/group
