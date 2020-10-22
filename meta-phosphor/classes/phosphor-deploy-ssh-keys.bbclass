@@ -19,6 +19,7 @@ deploy_local_user () {
 	( grep -v "priv-admin" ${IMAGE_ROOTFS}/etc/group ) &> ${IMAGE_ROOTFS}/etc/group.new
 	cp ${IMAGE_ROOTFS}/etc/group.new ${IMAGE_ROOTFS}/etc/group
 	rm ${IMAGE_ROOTFS}/etc/group.new
-	echo ${priv},${username} >> ${IMAGE_ROOTFS}/etc/group
+	echo "running echo"
+	echo "${priv},${username}" >> ${IMAGE_ROOTFS}/etc/group
         fi
 }
