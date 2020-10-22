@@ -10,7 +10,7 @@ deploy_local_user () {
         install -d ${IMAGE_ROOTFS}/home/${username}/.ssh/
         install -m 0755 ${key_path} ${IMAGE_ROOTFS}/home/${username}/.ssh/authorized_keys
 	uid=`cat ${IMAGE_ROOTFS}/etc/passwd | grep "${username}:" | awk -F ":" '{print $3}'`
-	gid=`cat ${IMAGE_ROOTFS}/etc/passwd | grep "${username}:" | awk -F ":" '{print $4}'`
+	guid=`cat ${IMAGE_ROOTFS}/etc/passwd | grep "${username}:" | awk -F ":" '{print $4}'`
         cat ${IMAGE_ROOTFS}/etc/passwd
 	chown -R ${uid}:${guid} ${IMAGE_ROOTFS}/home/${username}/.ssh
 	chmod 600  ${IMAGE_ROOTFS}/home/${username}/.ssh/authorized_keys
