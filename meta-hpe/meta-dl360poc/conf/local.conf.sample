@@ -247,7 +247,3 @@ INHERIT += "extrausers"
 EXTRA_USERS_PARAMS = " \
   usermod -p '\$1\$UGMqyqdG\$FZiylVFmRRfl9Z0Ue8G7e/' root; \
   "
-
-INHERIT += "phosphor-deploy-ssh-keys"
-
-SSH_KEYS = "vejmarie:/home/openbmc/openbmc/meta-hpe/keys/test.pub;"
