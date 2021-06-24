@@ -36,16 +36,30 @@ start)
     echo "0x0104" > idProduct
     mkdir -p strings/0x409
     echo "OpenBMC" > strings/0x409/manufacturer
-    echo "Virtual Media Device" > strings/0x409/product
+    echo "Multi Gadget" > strings/0x409/product
+    echo 120 > configs/c.1/MaxPower
     mkdir -p configs/c.1/strings/0x409
     echo "config 1" > configs/c.1/strings/0x409/configuration
-    mkdir -p functions/mass_storage.usb0
-    ln -s functions/mass_storage.usb0 configs/c.1
+    echo 120 > configs/c.2/MaxPower
+    mkdir -p configs/c.2/strings/0x409
+    echo "config 2" > configs/c.2/strings/0x409/configuration
+    mkdir -p functions/mass_storage.0
+    ln -s functions/mass_storage.0 configs/c.1
     echo 1 > functions/mass_storage.usb0/lun.0/removable
     echo 1 > functions/mass_storage.usb0/lun.0/ro
     echo 0 > functions/mass_storage.usb0/lun.0/cdrom
-    echo $nbd_device > functions/mass_storage.usb0/lun.0/file
+    echo $nbd_device > functions/mass_storage.0/lun.0/file
+    mkdir functions/acm.0
+    mkdir functions/ecm.0
+    mkdir functions/rndis.0
+    ln -s functions/rndis.0 configs/c.1
+    ln -s functions/acm.0 configs/c.1
+    ln -s functions/mass_storage.0 configs/c.1
+    ln -s functions/ecm.0 configs/c.2
+    ln -s functions/acm.0 configs/c.2
+    ln -s functions/mass_storage.0 configs/c.2
     echo "80402000.udc" > UDC
+
     )
     ;;
 stop)
