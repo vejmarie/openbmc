@@ -632,7 +632,7 @@
       interrupts = <13>;
       interrupt-parent = <&vic1>;
       vdevnum = <0>;
-      fepnum = <7>;
+      fepnum = <4>;
       udcg-handle = <&udcg>;
     };
 
@@ -642,7 +642,17 @@
       interrupts = <13>;
       interrupt-parent = <&vic1>;
       vdevnum = <1>;
-      fepnum = <7>;
+      fepnum = <4>;
+      udcg-handle = <&udcg>;
+    };
+
+    udc2: udc@80403000 {
+      compatible = "hpe, gxp-udc";
+      reg = <0x80403000 0x1000>;
+      interrupts = <13>;
+      interrupt-parent = <&vic1>;
+      vdevnum = <2>;
+      fepnum = <4>;
       udcg-handle = <&udcg>;
     };
 
