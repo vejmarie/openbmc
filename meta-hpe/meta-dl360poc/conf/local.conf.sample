@@ -237,6 +237,8 @@ PACKAGECONFIG_append_pn-nativesdk-qemu = " sdl"
 # this doesn't mean anything to you.
 CONF_VERSION = "1"
 
+IMAGE_INSTALL += " vehci-gxp-b0-workarround "
+
 # Set the root password to '0penBmc'
 INHERIT += "extrausers"
 
