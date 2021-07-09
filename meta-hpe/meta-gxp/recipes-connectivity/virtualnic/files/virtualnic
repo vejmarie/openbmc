@@ -1,0 +1,80 @@
+#!/bin/sh
+
+if [ $# -ne 1 ]
+then
+action="start"
+else
+action=$1
+fi
+
+gadget_name=obmc_virtualnic
+gadget_dir=/sys/kernel/config/usb_gadget/$gadget_name
+
+set -ex
+
+case "$action" in
+start)
+    (
+    if [ ! -d $gadget_dir ]
+    then
+    mkdir -p $gadget_dir
+	cd /sys/kernel/config/usb_gadget
+	mkdir -p $gadget_name
+	cd $gadget_name
+        echo 0x0419 > bcdDevice                             
+        echo 0x0200 > bcdUSB                                
+
+        echo 0x1d6b > idProduct                             
+        echo 0x0104 > idVendor                              
+
+
+	mkdir strings/0x409
+	echo 20210701 > strings/0x409/serialnumber
+	echo "virtulanic" > strings/0x409/manufacturer
+	echo "Multi Gadget" > strings/0x409/product
+
+	mkdir configs/c.1
+	echo 120 > configs/c.1/MaxPower
+	mkdir configs/c.1/strings/0x409
+	echo "Conf 1" > configs/c.1/strings/0x409/configuration
+
+	mkdir functions/ecm.usb0
+#	ln -s functions/ecm.usb0 configs/c.1
+
+	# we wait for an event on a USB mass storage configuration
+	# When the event will be triggered that will
+	# kick the virtual nic in
+
+        mkdir -p functions/mass_storage.usb0
+        ln -s functions/mass_storage.usb0 configs/c.1
+        echo 0 > functions/mass_storage.usb0/lun.0/removable
+        echo 0 > functions/mass_storage.usb0/lun.0/ro
+        echo 0 > functions/mass_storage.usb0/lun.0/cdrom
+	if [ ! -d /mnt/channel ]
+	then
+		mkdir /mnt/channel
+	fi
+	mount -t tmpfs -o size=1024 tmpfs /mnt/channel
+	dd if=/dev/zero of=/mnt/channel/lun.0 bs=512 count=1	
+        echo /mnt/channel/lun.0 > functions/mass_storage.usb0/lun.0/file
+
+    fi
+    cd /sys/kernel/config/usb_gadget/$gadget_name
+    echo "80403000.udc" > UDC
+    exit 0
+    )
+    ;;
+stop)
+    (
+    cd $gadget_dir
+    echo "" > UDC
+    )
+    exit 0
+    ;;
+*)
+    echo "invalid action $action" >&2
+    exit 1
+esac
+
+exit 0
+
