@@ -620,7 +620,6 @@
         linux,code = <202>;
         gpios = <&gpio 252 1>;
       };
-
     };
 
     vuhc0: vuhc@80400080 {
