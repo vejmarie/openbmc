@@ -614,6 +614,13 @@
         linux,code = <201>;
         gpios = <&gpio 251 1>;
       };
+
+      PortOwner@2 {
+        label = "Port Owner";
+        linux,code = <202>;
+        gpios = <&gpio 252 1>;
+      };
+
     };
 
     vuhc0: vuhc@80400080 {
