@@ -27,6 +27,9 @@ start)
         echo 0x1d6b > idProduct                             
         echo 0x0104 > idVendor                              
 
+	echo 0x02 > bDeviceClass
+	echo 0x0C > bDeviceSubClass
+
 
 	mkdir strings/0x409
 	echo OBMCVN01 > strings/0x409/serialnumber
