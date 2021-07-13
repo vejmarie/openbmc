@@ -33,7 +33,7 @@ start)
 
 	mkdir strings/0x409
 	echo OBMCVN01 > strings/0x409/serialnumber
-	echo "virtulanic" > strings/0x409/manufacturer
+	echo "OpenBMC virtualnic" > strings/0x409/manufacturer
 	echo "Multi Gadget" > strings/0x409/product
 
 	mkdir configs/c.1
