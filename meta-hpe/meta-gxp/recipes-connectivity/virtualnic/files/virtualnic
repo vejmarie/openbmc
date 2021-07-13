@@ -24,8 +24,8 @@ start)
         echo 0x0419 > bcdDevice                             
         echo 0x0200 > bcdUSB                                
 
-        echo 0x1d6b > idProduct                             
-        echo 0x0104 > idVendor                              
+        echo 0x1d6b > idVendor
+        echo 0x0104 > idProduct
 
 	echo 0x02 > bDeviceClass
 	echo 0x0C > bDeviceSubClass
