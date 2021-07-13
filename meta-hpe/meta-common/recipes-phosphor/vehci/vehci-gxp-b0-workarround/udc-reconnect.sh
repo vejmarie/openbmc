@@ -1,4 +1,4 @@
-#~/bin/sh
+#!/bin/sh
 
 if [ "$1" == "udc0" ]; then
   function=`cat /sys/class/udc/80401000.udc/function`
