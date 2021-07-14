@@ -6,6 +6,7 @@ SRC_URI_append = " file://virtualnic.service file://LICENSE file://virtualnic "
 
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=89aea4e17d99a7cacdbeed46a0096b10"
+IMAGE_INSTALL += "virtualnic "
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 #FILES_${PN} += "${D}${sysconfigdir}/system/virtualnic.service"
